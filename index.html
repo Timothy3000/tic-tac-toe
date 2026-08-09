@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Крестики-нолики</title>
+    <style>
+        .grey{background-color: grey; height: 200px; width: 200px;}
+        .he{background-color: greenyellow; height: 200px; width: 200px; color: black; font-size: 200px;}
+        .i{background-color: red; height: 200px; width: 200px; color: white; font-size: 200px;}
+        .box{display: flex; justify-content: center; max-width: 610px; gap: 4px; flex-wrap: wrap;}
+        body{background-color: blue;}
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Крестики-нолики</h1>
+    <div class="box">
+        <div id="1"></div><div id="2"></div><div id="3"></div>
+        <div id="4"></div><div id="5"></div><div id="6"></div>
+        <div id="7"></div><div id="8"></div><div id="9"></div>
+    </div>
+    <h4>v1.0.2.2</h4>
+    <script>
+        window.onload=start;
+        function start(){
+            for (let i=1; i<10; i++) {
+                document.getElementById(String(i)).innerHTML=`<button class="grey" onclick="go(`+i+`)"></button>`;
+            }
+            sessionStorage.setItem('freak', [1,2,3,4,5,6,7,8,9]);
+
+            sessionStorage.setItem('ik', JSON.stringify([]));
+            sessionStorage.setItem('hek', JSON.stringify([]));
+        }
+        function go(n){
+            let freak=sessionStorage.getItem("freak");
+
+            let hek=JSON.parse(sessionStorage.getItem('hek'));
+
+            freak=freak.split(',').map(Number); // [1, 2, 3, 4, 5]
+            document.getElementById(String(n)).innerHTML=`<button class="he">X</button>`;
+
+            hek.push(n);
+
+            const index = freak.indexOf(n);
+            freak.splice(index, 1);
+            console.log(freak);
+
+            let ik=JSON.parse(sessionStorage.getItem('ik'));
+            console.log(ik,hek);
+
+            w=cw(hek);
+            if (w==true){setTimeout(function(){alert("Ты победил!"); start()},50);}
+            else if(freak.length === 0){setTimeout(function(){alert("Ничья"); start()},50);}
+            else{
+                const set = new Set([1,2,3,4,5,6,7,8,9]);
+                const set2 = new Set(freak);
+                const wins=[[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]];
+                let index;
+                for (let pattern of wins) {
+                    if (set.has(pattern[0]) && set.has(pattern[1]) && set.has(pattern[2])) {
+                        if (set2.has(pattern[0])) {document.getElementById(String(pattern[0])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[0]);}
+                        else if (set2.has(pattern[1])) {document.getElementById(String(pattern[1])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[1]);}
+                        else if (set2.has(pattern[2])) {document.getElementById(String(pattern[2])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[2]);}
+
+                        console.log(index);
+
+                        ik.push(freak[index]);
+                        freak.splice(index, 1);
+                        if (index!=undefined){break;}
+                    }
+                }
+                w2=cw(ik);
+                if (w2==true){setTimeout(function(){alert("Ты лох!"); start()},50);}
+                else if(freak.length === 0){setTimeout(function(){alert("Ничья"); start()},50);}
+            }
+
+            sessionStorage.setItem('freak', freak);
+            sessionStorage.setItem('hek', JSON.stringify(hek));
+            sessionStorage.setItem('ik', JSON.stringify(ik));
+        }
+        function cw(moves){
+            const set = new Set(moves);
+            const wins=[[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]];
+            for (let pattern of wins) {
+                if (set.has(pattern[0]) && set.has(pattern[1]) && set.has(pattern[2])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
