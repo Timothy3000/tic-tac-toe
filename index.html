@@ -18,7 +18,7 @@
         <div id="4"></div><div id="5"></div><div id="6"></div>
         <div id="7"></div><div id="8"></div><div id="9"></div>
     </div>
-    <h4>v1.0.2.5-2</h4>
+    <h4>v1.0.2.6</h4>
     <script>
         window.onload=start;
         function start(){
@@ -46,10 +46,9 @@
             let ik=JSON.parse(sessionStorage.getItem('ik'));
 
             w=cw(hek);
-            if (w==true){setTimeout(function(){alert("Ты победил!"); start()},50);}
+            if (w==true){setTimeout(function(){alert("Ты победил(-а)!"); start()},50);}
             else if(freak.length === 0){setTimeout(function(){alert("Ничья"); start()},50);}
             else{
-                const set = new Set([1,2,3,4,5,6,7,8,9]);
                 const set2 = new Set(freak);
                 const wins=[[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]];
                 let index;
@@ -64,7 +63,7 @@
                         if (index!=undefined){break;}
                 }
                 w2=cw(ik);
-                if (w2==true){setTimeout(function(){alert("Ты лох!"); start()},50);}
+                if (w2==true){setTimeout(function(){alert("Ты проиграл(-а)!"); start()},50);}
                 else if(freak.length === 0){setTimeout(function(){alert("Ничья"); start()},50);}
             }
 
