@@ -18,7 +18,7 @@
         <div id="4"></div><div id="5"></div><div id="6"></div>
         <div id="7"></div><div id="8"></div><div id="9"></div>
     </div>
-    <h4>v1.0.2.4</h4>
+    <h4>v1.0.2.5-2</h4>
     <script>
         window.onload=start;
         function start(){
@@ -54,17 +54,14 @@
                 const wins=[[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]];
                 let index;
                 for (let pattern of wins) {
-                    if (set.has(pattern[0]) && set.has(pattern[1]) && set.has(pattern[2])) {
                         if (set2.has(pattern[0])) {document.getElementById(String(pattern[0])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[0]);}
                         else if (set2.has(pattern[1])) {document.getElementById(String(pattern[1])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[1]);}
                         else if (set2.has(pattern[2])) {document.getElementById(String(pattern[2])).innerHTML=`<button class="i">0</button>`; index = freak.indexOf(pattern[2]);}
 
                         console.log("index: ",index," ik: ",ik," hek: ",hek," freak: ",freak); //---------------------------------------------------
-
                         ik.push(freak[index]);
                         freak.splice(index, 1);
                         if (index!=undefined){break;}
-                    }
                 }
                 w2=cw(ik);
                 if (w2==true){setTimeout(function(){alert("Ты лох!"); start()},50);}
